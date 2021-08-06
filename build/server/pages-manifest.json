@@ -3,7 +3,6 @@
   "/api/hello": "pages/api/hello.js",
   "/": "pages/index.js",
   "/login": "pages/login.html",
-  "/products/[id]": "pages/products/[id].js",
   "/sample": "pages/sample.html",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
