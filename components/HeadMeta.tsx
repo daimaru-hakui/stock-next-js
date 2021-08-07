@@ -12,6 +12,7 @@ const HeadMeta = ({ title, description }) => {
       {/* <meta property="og:image" content={"/favicon.png"} /> */}
       <meta property="og:site_name" content={title} />
       {/* <meta name="keywords" content={keyword} /> */}
+      <meta name="description" content={description} />
       <link rel="apple-touch-icon" href={"/favicon.png"} />
     </Head>
   );
