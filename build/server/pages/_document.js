@@ -326,6 +326,7 @@ exports.default = _default;
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
+var __webpack_unused_export__;
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -338,10 +339,10 @@ function _objectWithoutProperties(source, excluded) { if (source == null) return
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
-exports.__esModule = true;
+__webpack_unused_export__ = true;
 exports.Html = Html;
-exports.Main = Main;
-exports.NextScript = exports.Head = exports.default = void 0;
+__webpack_unused_export__ = Main;
+__webpack_unused_export__ = __webpack_unused_export__ = exports.default = void 0;
 
 var _propTypes = _interopRequireDefault(__webpack_require__(229));
 
@@ -355,9 +356,9 @@ var _documentContext = __webpack_require__(932);
 
 var _utils = __webpack_require__(579);
 
-exports.DocumentContext = _utils.DocumentContext;
-exports.DocumentInitialProps = _utils.DocumentInitialProps;
-exports.DocumentProps = _utils.DocumentProps;
+__webpack_unused_export__ = _utils.DocumentContext;
+__webpack_unused_export__ = _utils.DocumentInitialProps;
+__webpack_unused_export__ = _utils.DocumentProps;
 
 var _getPageFiles = __webpack_require__(171);
 
@@ -919,7 +920,7 @@ class Head extends _react.Component {
 
 }
 
-exports.Head = Head;
+__webpack_unused_export__ = Head;
 Head.contextType = _documentContext.DocumentContext;
 Head.propTypes = {
   nonce: _propTypes.default.string,
@@ -1039,7 +1040,7 @@ class NextScript extends _react.Component {
 
 }
 
-exports.NextScript = NextScript;
+__webpack_unused_export__ = NextScript;
 NextScript.contextType = _documentContext.DocumentContext;
 NextScript.propTypes = {
   nonce: _propTypes.default.string,
@@ -1053,6 +1054,30 @@ function getAmpPath(ampPath, asPath) {
 
 /***/ }),
 
+/***/ 789:
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(282);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var next_document__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(859);
+
+
+
+class MyDocument extends next_document__WEBPACK_IMPORTED_MODULE_1__.default {
+  render() {
+    return /*#__PURE__*/react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(next_document__WEBPACK_IMPORTED_MODULE_1__.Html, {
+      lang: "ja"
+    });
+  }
+
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (MyDocument);
+
+/***/ }),
+
 /***/ 630:
 /***/ (function(__unused_webpack_module, exports) {
 
@@ -1061,6 +1086,14 @@ exports.__esModule=true;exports.htmlEscapeJsonString=htmlEscapeJsonString;// Thi
 // License: https://github.com/zertosh/htmlescape/blob/0527ca7156a524d256101bb310a9f970f63078ad/LICENSE
 const ESCAPE_LOOKUP={'&':'\\u0026','>':'\\u003e','<':'\\u003c','\u2028':'\\u2028','\u2029':'\\u2029'};const ESCAPE_REGEX=/[&><\u2028\u2029]/g;function htmlEscapeJsonString(str){return str.replace(ESCAPE_REGEX,match=>ESCAPE_LOOKUP[match]);}
 //# sourceMappingURL=htmlescape.js.map
+
+/***/ }),
+
+/***/ 859:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+module.exports = __webpack_require__(881)
+
 
 /***/ }),
 
@@ -1188,6 +1221,14 @@ module.exports = require("react");;
 
 /***/ }),
 
+/***/ 282:
+/***/ (function(module) {
+
+"use strict";
+module.exports = require("react/jsx-runtime");;
+
+/***/ }),
+
 /***/ 168:
 /***/ (function(module) {
 
@@ -1203,7 +1244,7 @@ module.exports = require("styled-jsx/server");;
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = function(moduleId) { return __webpack_require__(__webpack_require__.s = moduleId); }
-var __webpack_exports__ = (__webpack_exec__(881));
+var __webpack_exports__ = (__webpack_exec__(789));
 module.exports = __webpack_exports__;
 
 })();

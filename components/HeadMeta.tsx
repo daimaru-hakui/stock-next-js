@@ -1,5 +1,4 @@
 import Head from "next/head";
-
 const HeadMeta = ({ title, description }) => {
   return (
     <Head>

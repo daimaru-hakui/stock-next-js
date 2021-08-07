@@ -457,6 +457,9 @@ const HeadMeta = ({
     }), /*#__PURE__*/jsx_runtime_.jsx("meta", {
       property: "og:site_name",
       content: title
+    }), /*#__PURE__*/jsx_runtime_.jsx("meta", {
+      name: "description",
+      content: description
     }), /*#__PURE__*/jsx_runtime_.jsx("link", {
       rel: "apple-touch-icon",
       href: "/favicon.png"
