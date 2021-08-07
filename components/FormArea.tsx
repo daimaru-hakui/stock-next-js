@@ -32,7 +32,7 @@ const FormArea = (props) => {
               : "例)SP125"
           }
           list="search"
-          w={{ base: "100%", md: "500px" }}
+          w={{ base: "100%", md: "450px" }}
           mr={1}
           py={6}
           onKeyPress={(e) => (e.key == "Enter" ? onClickSearch(e) : false)}
@@ -45,7 +45,8 @@ const FormArea = (props) => {
           ))}
         </datalist>
         <Button type="submit" colorScheme="teal" px={5} py={6} mr={1}>
-          <Icon as={Search2Icon} />
+          <Icon as={Search2Icon} mr={1} />
+          検索
         </Button>
         <Button onClick={onClickReset} colorScheme="red" px={5} py={6}>
           RESET

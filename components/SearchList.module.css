@@ -1,6 +1,6 @@
 .fade {
   animation-name: fade1;
-  animation-duration: 2s;
+  animation-duration: 1.5s;
 }
 
 @keyframes fade1 {

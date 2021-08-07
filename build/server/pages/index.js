@@ -4,7 +4,7 @@ exports.id = 405;
 exports.ids = [405];
 exports.modules = {
 
-/***/ 464:
+/***/ 908:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19,9 +19,6 @@ __webpack_require__.d(__webpack_exports__, {
 
 // EXTERNAL MODULE: external "react/jsx-runtime"
 var jsx_runtime_ = __webpack_require__(282);
-;// CONCATENATED MODULE: external "next/head"
-var head_namespaceObject = require("next/head");;
-var head_default = /*#__PURE__*/__webpack_require__.n(head_namespaceObject);
 ;// CONCATENATED MODULE: external "axios"
 var external_axios_namespaceObject = require("axios");;
 var external_axios_default = /*#__PURE__*/__webpack_require__.n(external_axios_namespaceObject);
@@ -66,7 +63,7 @@ const FormArea = props => {
         list: "search",
         w: {
           base: "100%",
-          md: "500px"
+          md: "450px"
         },
         mr: 1,
         py: 6,
@@ -77,15 +74,16 @@ const FormArea = props => {
           value: item["品番"],
           children: item["商品名"]
         }, index))
-      }), /*#__PURE__*/jsx_runtime_.jsx(react_.Button, {
+      }), /*#__PURE__*/(0,jsx_runtime_.jsxs)(react_.Button, {
         type: "submit",
         colorScheme: "teal",
         px: 5,
         py: 6,
         mr: 1,
-        children: /*#__PURE__*/jsx_runtime_.jsx(react_.Icon, {
-          as: icons_namespaceObject.Search2Icon
-        })
+        children: [/*#__PURE__*/jsx_runtime_.jsx(react_.Icon, {
+          as: icons_namespaceObject.Search2Icon,
+          mr: 1
+        }), "\u691C\u7D22"]
       }), /*#__PURE__*/jsx_runtime_.jsx(react_.Button, {
         onClick: onClickReset,
         colorScheme: "red",
@@ -433,6 +431,40 @@ const StockContextProvider = props => {
 };
 
 /* harmony default export */ var contexts_StockContext = (StockContextProvider);
+;// CONCATENATED MODULE: external "next/head"
+var head_namespaceObject = require("next/head");;
+var head_default = /*#__PURE__*/__webpack_require__.n(head_namespaceObject);
+;// CONCATENATED MODULE: ./components/HeadMeta.tsx
+
+
+
+
+const HeadMeta = ({
+  title,
+  description
+}) => {
+  return /*#__PURE__*/(0,jsx_runtime_.jsxs)((head_default()), {
+    children: [/*#__PURE__*/jsx_runtime_.jsx("title", {
+      children: title
+    }), /*#__PURE__*/jsx_runtime_.jsx("meta", {
+      charSet: "utf-8"
+    }), /*#__PURE__*/jsx_runtime_.jsx("meta", {
+      property: "og:title",
+      content: title
+    }), /*#__PURE__*/jsx_runtime_.jsx("meta", {
+      property: "og:description",
+      content: description
+    }), /*#__PURE__*/jsx_runtime_.jsx("meta", {
+      property: "og:site_name",
+      content: title
+    }), /*#__PURE__*/jsx_runtime_.jsx("link", {
+      rel: "apple-touch-icon",
+      href: "/favicon.png"
+    })]
+  });
+};
+
+/* harmony default export */ var components_HeadMeta = (HeadMeta);
 ;// CONCATENATED MODULE: ./pages/index.tsx
 
 
@@ -443,18 +475,15 @@ const StockContextProvider = props => {
 
 
 
-const Home = ({
-  items
-}) => {
+const Home = props => {
+  const {
+    items
+  } = props;
   return /*#__PURE__*/jsx_runtime_.jsx(react_.Box, {
     children: /*#__PURE__*/(0,jsx_runtime_.jsxs)(contexts_StockContext, {
-      children: [/*#__PURE__*/(0,jsx_runtime_.jsxs)((head_default()), {
-        children: [/*#__PURE__*/jsx_runtime_.jsx("title", {
-          children: "\u5927\u4E38\u767D\u8863 \u5728\u5EAB\u8868"
-        }), /*#__PURE__*/jsx_runtime_.jsx("link", {
-          rel: "icon",
-          href: "/favicon.ico"
-        })]
+      children: [/*#__PURE__*/jsx_runtime_.jsx(components_HeadMeta, {
+        title: "大丸白衣 在庫表",
+        description: "マイユニフォームクラブとセレナーデの商品在庫を検索することができるWEBアプリです。"
       }), /*#__PURE__*/jsx_runtime_.jsx(Header, {}), /*#__PURE__*/(0,jsx_runtime_.jsxs)(react_.Stack, {
         spacing: 3,
         direction: "column",
@@ -561,7 +590,7 @@ module.exports = require("react/jsx-runtime");;
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = function(moduleId) { return __webpack_require__(__webpack_require__.s = moduleId); }
-var __webpack_exports__ = (__webpack_exec__(464));
+var __webpack_exports__ = (__webpack_exec__(908));
 module.exports = __webpack_exports__;
 
 })();

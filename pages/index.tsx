@@ -1,18 +1,22 @@
-import Head from "next/head";
 import axios from "axios";
 import { Stock } from "../components/Stock";
 import { Header } from "../components/Header";
 import { Box, Stack, Text } from "@chakra-ui/react";
 import StockContextProvider from "../contexts/StockContext";
+import Head from "../components/HeadMeta";
 
-const Home = ({ items }) => {
+const Home = (props) => {
+  const { items } = props;
   return (
     <Box>
       <StockContextProvider>
-        <Head>
-          <title>大丸白衣 在庫表</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
+        <Head
+          title={"大丸白衣 在庫表"}
+          description={
+            "マイユニフォームクラブとセレナーデの商品在庫を検索することができるWEBアプリです。"
+          }
+        />
+
         <Header />
 
         <Stack spacing={3} direction="column" alignItems="center" mt={16}>
