@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { DownloadIcon } from "@chakra-ui/icons";
-import { Button, Flex, Icon } from "@chakra-ui/react";
+import { Box, Button, Flex, Icon } from "@chakra-ui/react";
 import { CSVLink } from "react-csv";
 import FormArea from "./FormArea";
 import SearchList from "./SearchList";
 
-export const Stock = ({ items }) => {
+export const Stock = (props) => {
+  const { items, products } = props;
   const [selectData, setSelectData] = useState([]); //検索時にインプット入力した配列リスト
   const [inputValue, setInputValue] = useState(""); //インプット入力値
   const [csvData, setCsvData] = useState(""); //CSVデータ
@@ -101,6 +102,7 @@ export const Stock = ({ items }) => {
       </Flex>
       <SearchList
         items={items}
+        products={products}
         selectData={selectData}
         filterItems={filterItems}
         onClickDelete={onClickDelete}

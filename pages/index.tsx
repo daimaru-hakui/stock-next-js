@@ -1,14 +1,15 @@
 import axios from "axios";
 import { Stock } from "../components/Stock";
 import { Header } from "../components/Header";
-import { Box, Stack, Text } from "@chakra-ui/react";
 import StockContextProvider from "../contexts/StockContext";
 import Head from "../components/HeadMeta";
+import MainTitle from "../components/MainTitle";
 
 const Home = (props) => {
-  const { items } = props;
+  const { items, products } = props;
+  console.log(products);
   return (
-    <Box>
+    <>
       <StockContextProvider>
         <Head
           title={"大丸白衣 在庫表"}
@@ -16,29 +17,30 @@ const Home = (props) => {
             "マイユニフォームクラブとセレナーデの商品在庫を検索することができるWEBアプリです。"
           }
         />
-
         <Header />
-
-        <Stack spacing={3} direction="column" alignItems="center" mt={16}>
-          <Text fontSize="3xl" as="h2" fontWeight="bold">
-            在庫検索
-          </Text>
-          <Text fontSize="xl" as="h3" px={3}>
-            品番を入力して在庫検索ができます。
-          </Text>
-        </Stack>
-        <Stock items={items} />
+        <MainTitle
+          h2Title={"在庫検索"}
+          h3Title={"品番を入力して在庫検索ができます。"}
+        />
+        <Stock items={items} products={products} />
       </StockContextProvider>
-    </Box>
+    </>
   );
 };
 export default Home;
 
 export async function getStaticProps() {
-  const res = await axios.get(
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vTPID0Oyeo8FwNN6lDPETgrhd8OsmrRJ6RZy5EO80G4uGgkj7ZRhCZ9OXsUNDFF0c5YWfwSrBaEh9_P/pub?gid=1399239958&single=true&output=csv"
-  );
-  const splitItems = await res.data.split("\n");
+  const [itemsRes, productsRes] = await Promise.all([
+    axios.get(
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vTPID0Oyeo8FwNN6lDPETgrhd8OsmrRJ6RZy5EO80G4uGgkj7ZRhCZ9OXsUNDFF0c5YWfwSrBaEh9_P/pub?gid=1399239958&single=true&output=csv"
+    ),
+    axios.get("https://catalog-information.microcms.io/api/v1/products", {
+      headers: {
+        "X-API-KEY": "6ada6ea2-91a7-4914-aff7-0803ef6db4bb",
+      },
+    }),
+  ]);
+  const splitItems = await itemsRes.data.split("\n");
   const itemKeys = await splitItems[0].trim().split(",");
   let jsonDatas = [];
   for (let i = 1; i < splitItems.length; i++) {
@@ -49,13 +51,38 @@ export async function getStaticProps() {
     }
     jsonDatas.push(csvObject);
   }
+  const products = productsRes.data.contents;
 
   return {
     props: {
       items: jsonDatas,
+      products,
     },
   };
 }
+
+// export async function getStaticProps() {
+//   const res = await axios.get(
+//     "https://docs.google.com/spreadsheets/d/e/2PACX-1vTPID0Oyeo8FwNN6lDPETgrhd8OsmrRJ6RZy5EO80G4uGgkj7ZRhCZ9OXsUNDFF0c5YWfwSrBaEh9_P/pub?gid=1399239958&single=true&output=csv"
+//   );
+//   const splitItems = await res.data.split("\n");
+//   const itemKeys = await splitItems[0].trim().split(",");
+//   let jsonDatas = [];
+//   for (let i = 1; i < splitItems.length; i++) {
+//     let csvObject = new Object();
+//     let itemValues = splitItems[i].split(",");
+//     for (let j = 0; j < itemKeys.length; j++) {
+//       csvObject[itemKeys[j]] = itemValues[j];
+//     }
+//     jsonDatas.push(csvObject);
+//   }
+
+//   return {
+//     props: {
+//       items: jsonDatas,
+//     },
+//   };
+// }
 
 // export async function getStaticProps() {
 //   const res = await fetch(
