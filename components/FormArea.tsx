@@ -6,6 +6,7 @@ const FormArea = (props) => {
   const {
     inputValue,
     filterItems,
+    selectData,
     handleChangeText,
     onClickSearch,
     onClickReset,
@@ -25,7 +26,11 @@ const FormArea = (props) => {
           type="text"
           value={inputValue}
           variant="outline"
-          placeholder="例）SP125"
+          placeholder={
+            selectData.length > 0
+              ? selectData.map((data) => ` ${data} `)
+              : "例)SP125"
+          }
           list="search"
           w={{ base: "100%", md: "500px" }}
           mr={1}

@@ -3,6 +3,7 @@ import {
   Button,
   Flex,
   Heading,
+  Link,
   Stack,
   Text,
   useDisclosure,
@@ -39,9 +40,7 @@ export const Header: React.FC = () => {
         flexGrow={1}
         mt={{ base: 4, md: 0 }}
       >
-        <Text>Docs</Text>
-        <Text>Examples</Text>
-        <Text>Blog</Text>
+        <Link href="https://www.daimaru-hakui.co.jp/">WEBサイト</Link>
       </Stack>
       <Box
         display={{ base: isOpen ? "block" : "none", md: "block" }}

@@ -4,7 +4,7 @@ exports.id = 405;
 exports.ids = [405];
 exports.modules = {
 
-/***/ 958:
+/***/ 464:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25,12 +25,14 @@ var head_default = /*#__PURE__*/__webpack_require__.n(head_namespaceObject);
 ;// CONCATENATED MODULE: external "axios"
 var external_axios_namespaceObject = require("axios");;
 var external_axios_default = /*#__PURE__*/__webpack_require__.n(external_axios_namespaceObject);
+// EXTERNAL MODULE: external "react"
+var external_react_ = __webpack_require__(297);
 ;// CONCATENATED MODULE: external "@chakra-ui/icons"
 var icons_namespaceObject = require("@chakra-ui/icons");;
 // EXTERNAL MODULE: external "@chakra-ui/react"
 var react_ = __webpack_require__(426);
-// EXTERNAL MODULE: external "react"
-var external_react_ = __webpack_require__(297);
+;// CONCATENATED MODULE: external "react-csv"
+var external_react_csv_namespaceObject = require("react-csv");;
 ;// CONCATENATED MODULE: ./components/FormArea.tsx
 
 
@@ -42,6 +44,7 @@ const FormArea = props => {
   const {
     inputValue,
     filterItems,
+    selectData,
     handleChangeText,
     onClickSearch,
     onClickReset
@@ -59,7 +62,7 @@ const FormArea = props => {
         type: "text",
         value: inputValue,
         variant: "outline",
-        placeholder: "\u4F8B\uFF09SP125",
+        placeholder: selectData.length > 0 ? selectData.map(data => ` ${data} `) : "例)SP125",
         list: "search",
         w: {
           base: "100%",
@@ -95,7 +98,12 @@ const FormArea = props => {
 };
 
 /* harmony default export */ var components_FormArea = (FormArea);
+// EXTERNAL MODULE: ./components/SearchList.module.css
+var SearchList_module = __webpack_require__(115);
+var SearchList_module_default = /*#__PURE__*/__webpack_require__.n(SearchList_module);
 ;// CONCATENATED MODULE: ./components/SearchList.tsx
+
+
 
 
 
@@ -110,13 +118,14 @@ const SearchList = props => {
   return /*#__PURE__*/jsx_runtime_.jsx(react_.Flex, {
     justifyContent: "center",
     alignItems: "center",
-    direction: "column",
+    direction: "column-reverse",
     children: selectData.map((data, index) => /*#__PURE__*/jsx_runtime_.jsx(react_.Box, {
       px: 5,
       mb: 5,
       mx: 2,
       borderRadius: 5,
       boxShadow: "base",
+      className: (SearchList_module_default()).fade,
       children: /*#__PURE__*/(0,jsx_runtime_.jsxs)(react_.Table, {
         w: {
           base: "100%",
@@ -135,28 +144,33 @@ const SearchList = props => {
             justifyContent: "space-between",
             alignItems: "center",
             children: [/*#__PURE__*/(0,jsx_runtime_.jsxs)(react_.Flex, {
+              fontSize: {
+                base: "xs",
+                md: "md"
+              },
+              direction: {
+                base: "column",
+                md: "row"
+              },
+              alignItems: "start",
               children: [/*#__PURE__*/jsx_runtime_.jsx(react_.Box, {
                 mr: 2,
                 children: data
               }), /*#__PURE__*/jsx_runtime_.jsx(react_.Box, {
-                children: filterItems.map(item => item["品番"] == data ? item["商品名"] : null)
-              })]
-            }), /*#__PURE__*/(0,jsx_runtime_.jsxs)(react_.Flex, {
-              children: [/*#__PURE__*/jsx_runtime_.jsx(react_.Button, {
-                value: index,
-                variant: "outline",
-                colorScheme: "gray",
                 mr: 2,
-                children: "\u8A73\u7D30"
-              }), /*#__PURE__*/jsx_runtime_.jsx(react_.Button, {
-                value: index,
+                children: filterItems.map(item => item["品番"] == data && item["商品名"])
+              }), /*#__PURE__*/jsx_runtime_.jsx(react_.Box, {
+                children: filterItems.map(item => item["品番"] == data && item["上代"] && "￥" + item["上代"])
+              })]
+            }), /*#__PURE__*/jsx_runtime_.jsx(react_.Flex, {
+              children: /*#__PURE__*/jsx_runtime_.jsx(react_.Button, {
                 variant: "outline",
                 colorScheme: "gray",
                 onClick: e => onClickDelete(e, index),
                 children: /*#__PURE__*/jsx_runtime_.jsx(react_.Icon, {
                   as: icons_namespaceObject.DeleteIcon
                 })
-              })]
+              })
             })]
           })
         }), /*#__PURE__*/jsx_runtime_.jsx(react_.Thead, {
@@ -212,7 +226,10 @@ const SearchList = props => {
     }, index))
   });
 };
+
+/* harmony default export */ var components_SearchList = (SearchList);
 ;// CONCATENATED MODULE: ./components/Stock.tsx
+
 
 
 
@@ -224,8 +241,6 @@ const SearchList = props => {
 const Stock = ({
   items
 }) => {
-  //重複削除
-  const filterItems = items.filter((item, index, self) => self.findIndex(e => e["品番"] === item["品番"]) === index);
   const {
     0: selectData,
     1: setSelectData
@@ -236,10 +251,33 @@ const Stock = ({
     1: setInputValue
   } = (0,external_react_.useState)(""); //インプット入力値
 
+  const {
+    0: csvData,
+    1: setCsvData
+  } = (0,external_react_.useState)(""); //CSVデータ
+  //品番の重複削除
+
+  const filterItems = items.filter((item, index, self) => self.findIndex(e => e["品番"] === item["品番"]) === index); //CSVファイルに変換
+
+  const onClickCsv = () => {
+    const csvData = items.filter(item => {
+      return selectData.includes(item["品番"]);
+    });
+    const header = Object.keys(items[0]).join(",") + "\n";
+    const body = csvData.map(d => {
+      return Object.keys(d).map(key => {
+        return d[key];
+      }).join(",");
+    }).join("\n");
+    const csvFile = header + body;
+    setCsvData(csvFile);
+  }; //INPUTの入力値を取得
+
+
   const handleChangeText = e => {
     setInputValue(e.target.value);
-    console.log(inputValue);
-  };
+  }; //検索絞り込み
+
 
   const onClickSearch = e => {
     e.preventDefault();
@@ -252,16 +290,18 @@ const Stock = ({
     if (newData.length === 0) return;
 
     if (!selectData.includes(newData[0])) {
-      setSelectData([newData[0], ...selectData]);
+      setSelectData([...selectData, newData[0]]);
     }
 
     setInputValue("");
-  };
+  }; //選択している全ての品番を削除
+
 
   const onClickReset = () => {
     setInputValue("");
     setSelectData([]);
-  };
+  }; //選択した品番の削除
+
 
   const onClickDelete = (e, index) => {
     let deleteNumber = index;
@@ -274,18 +314,24 @@ const Stock = ({
     children: [/*#__PURE__*/jsx_runtime_.jsx(components_FormArea, {
       inputValue: inputValue,
       filterItems: filterItems,
+      selectData: selectData,
       handleChangeText: handleChangeText,
       onClickSearch: onClickSearch,
       onClickReset: onClickReset
     }), /*#__PURE__*/jsx_runtime_.jsx(react_.Flex, {
       justifyContent: "center",
       mb: 6,
-      children: selectData.length > 0 ? /*#__PURE__*/(0,jsx_runtime_.jsxs)(react_.Button, {
-        children: ["CSV\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9", /*#__PURE__*/jsx_runtime_.jsx(react_.Icon, {
-          as: icons_namespaceObject.DownloadIcon
-        })]
-      }) : null
-    }), /*#__PURE__*/jsx_runtime_.jsx(SearchList, {
+      children: selectData.length > 0 && /*#__PURE__*/jsx_runtime_.jsx(external_react_csv_namespaceObject.CSVLink, {
+        data: csvData,
+        filename: new Date().toLocaleString() + "_zaiko.csv",
+        children: /*#__PURE__*/(0,jsx_runtime_.jsxs)(react_.Button, {
+          onClick: onClickCsv,
+          children: ["CSV\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9", /*#__PURE__*/jsx_runtime_.jsx(react_.Icon, {
+            as: icons_namespaceObject.DownloadIcon
+          })]
+        })
+      })
+    }), /*#__PURE__*/jsx_runtime_.jsx(components_SearchList, {
       items: items,
       selectData: selectData,
       filterItems: filterItems,
@@ -331,7 +377,7 @@ const Header = () => {
       },
       onClick: handleToggle,
       children: /*#__PURE__*/jsx_runtime_.jsx(icons_namespaceObject.HamburgerIcon, {})
-    }), /*#__PURE__*/(0,jsx_runtime_.jsxs)(react_.Stack, {
+    }), /*#__PURE__*/jsx_runtime_.jsx(react_.Stack, {
       direction: {
         base: "column",
         md: "row"
@@ -350,13 +396,10 @@ const Header = () => {
         base: 4,
         md: 0
       },
-      children: [/*#__PURE__*/jsx_runtime_.jsx(react_.Text, {
-        children: "Docs"
-      }), /*#__PURE__*/jsx_runtime_.jsx(react_.Text, {
-        children: "Examples"
-      }), /*#__PURE__*/jsx_runtime_.jsx(react_.Text, {
-        children: "Blog"
-      })]
+      children: /*#__PURE__*/jsx_runtime_.jsx(react_.Link, {
+        href: "https://www.daimaru-hakui.co.jp/",
+        children: "WEB\u30B5\u30A4\u30C8"
+      })
     }), /*#__PURE__*/jsx_runtime_.jsx(react_.Box, {
       display: {
         base: isOpen ? "block" : "none",
@@ -475,6 +518,18 @@ async function getStaticProps() {
 
 /***/ }),
 
+/***/ 115:
+/***/ (function(module) {
+
+// Exports
+module.exports = {
+	"fade": "SearchList_fade__2FHes",
+	"fade1": "SearchList_fade1__2ZbLj"
+};
+
+
+/***/ }),
+
 /***/ 426:
 /***/ (function(module) {
 
@@ -506,7 +561,7 @@ module.exports = require("react/jsx-runtime");;
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = function(moduleId) { return __webpack_require__(__webpack_require__.s = moduleId); }
-var __webpack_exports__ = (__webpack_exec__(958));
+var __webpack_exports__ = (__webpack_exec__(464));
 module.exports = __webpack_exports__;
 
 })();

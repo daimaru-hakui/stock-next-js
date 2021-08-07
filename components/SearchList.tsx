@@ -12,14 +12,27 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import Styles from "./SearchList.module.css";
 
-export const SearchList = (props) => {
+const SearchList = (props) => {
   const { items, selectData, filterItems, onClickDelete } = props;
 
   return (
-    <Flex justifyContent="center" alignItems="center" direction="column">
+    <Flex
+      justifyContent="center"
+      alignItems="center"
+      direction="column-reverse"
+    >
       {selectData.map((data, index) => (
-        <Box px={5} mb={5} mx={2} borderRadius={5} boxShadow="base" key={index}>
+        <Box
+          px={5}
+          mb={5}
+          mx={2}
+          borderRadius={5}
+          boxShadow="base"
+          key={index}
+          className={Styles.fade}
+        >
           <Table
             w={{ base: "100%", md: "600px" }}
             size="sm"
@@ -29,25 +42,31 @@ export const SearchList = (props) => {
           >
             <TableCaption placement="top" px={0} mb={2} fontSize="medium">
               <Flex justifyContent="space-between" alignItems="center">
-                <Flex>
+                <Flex
+                  fontSize={{ base: "xs", md: "md" }}
+                  direction={{ base: "column", md: "row" }}
+                  alignItems="start"
+                >
                   <Box mr={2}>{data}</Box>
+                  <Box mr={2}>
+                    {filterItems.map(
+                      (item) => item["品番"] == data && item["商品名"]
+                    )}
+                  </Box>
                   <Box>
-                    {filterItems.map((item) =>
-                      item["品番"] == data ? item["商品名"] : null
+                    {filterItems.map(
+                      (item) =>
+                        item["品番"] == data &&
+                        item["上代"] &&
+                        "￥" + item["上代"]
                     )}
                   </Box>
                 </Flex>
                 <Flex>
-                  <Button
-                    value={index}
-                    variant="outline"
-                    colorScheme="gray"
-                    mr={2}
-                  >
+                  {/* <Button variant="outline" colorScheme="gray" mr={2}>
                     詳細
-                  </Button>
+                  </Button> */}
                   <Button
-                    value={index}
                     variant="outline"
                     colorScheme="gray"
                     onClick={(e) => onClickDelete(e, index)}
@@ -89,3 +108,4 @@ export const SearchList = (props) => {
     </Flex>
   );
 };
+export default SearchList;
