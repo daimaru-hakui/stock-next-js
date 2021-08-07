@@ -28,7 +28,6 @@ const SearchList = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [showItem, setShowItem] = useState("");
   const onClickModal = (data) => {
-    console.log(data);
     setShowItem(data);
   };
 
@@ -79,17 +78,24 @@ const SearchList = (props) => {
                     </Box>
                   </Flex>
                   <Flex>
-                    <Button
-                      onClick={() => {
-                        onClickModal(data);
-                        onOpen();
-                      }}
-                      variant="outline"
-                      colorScheme="gray"
-                      mr={2}
-                    >
-                      詳細
-                    </Button>
+                    {products.map(
+                      (product, index) =>
+                        product["model"] == data && (
+                          <Button
+                            key={index}
+                            onClick={() => {
+                              onClickModal(data);
+                              onOpen();
+                            }}
+                            variant="outline"
+                            colorScheme="gray"
+                            mr={2}
+                          >
+                            詳細
+                          </Button>
+                        )
+                    )}
+
                     <Button
                       variant="outline"
                       colorScheme="gray"
@@ -132,37 +138,32 @@ const SearchList = (props) => {
       </Flex>
       <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            {products.map((product) =>
-              product["model"] == showItem ? (
-                product["model"]
-              ) : (
-                <Box>{showItem}</Box>
-              )
-            )}
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            {products.map((product) =>
-              product["model"] == showItem ? (
-                product["composition"]
-              ) : (
-                <Box>
-                  ここにサイズとスペックを表示しようと思います
-                  <br />
-                  どうですか？
-                </Box>
-              )
-            )}
-          </ModalBody>
+        {products.map((product, index) => {
+          if (product["model"] == showItem) {
+            return (
+              <ModalContent key={index}>
+                <ModalHeader>
+                  {product["model"]}
+                  {product["category"]}
+                </ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: product["size_spec"],
+                    }}
+                  ></div>
+                </ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
+                <ModalFooter>
+                  <Button colorScheme="blue" mr={3} onClick={onClose}>
+                    Close
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            );
+          }
+        })}
       </Modal>
     </>
   );

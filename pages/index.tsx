@@ -7,7 +7,6 @@ import MainTitle from "../components/MainTitle";
 
 const Home = (props) => {
   const { items, products } = props;
-  console.log(products);
   return (
     <>
       <StockContextProvider>
@@ -42,20 +41,20 @@ export async function getStaticProps() {
   ]);
   const splitItems = await itemsRes.data.split("\n");
   const itemKeys = await splitItems[0].trim().split(",");
-  let jsonDatas = [];
+  let items = [];
   for (let i = 1; i < splitItems.length; i++) {
     let csvObject = new Object();
     let itemValues = splitItems[i].split(",");
     for (let j = 0; j < itemKeys.length; j++) {
       csvObject[itemKeys[j]] = itemValues[j];
     }
-    jsonDatas.push(csvObject);
+    items.push(csvObject);
   }
   const products = productsRes.data.contents;
 
   return {
     props: {
-      items: jsonDatas,
+      items,
       products,
     },
   };
