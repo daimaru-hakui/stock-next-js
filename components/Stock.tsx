@@ -1,35 +1,52 @@
 import React, { useState } from "react";
 import { DownloadIcon } from "@chakra-ui/icons";
-import { Box, Button, Flex, Icon } from "@chakra-ui/react";
+import { Box, Button, Flex, Icon, WrapItem } from "@chakra-ui/react";
 import { CSVLink } from "react-csv";
 import FormArea from "./FormArea";
 import SearchList from "./SearchList";
 
-export const Stock = (props) => {
+type Props = {
+  id: string;
+  code: string;
+  number: string;
+  name: string;
+  price: string;
+  size: string;
+  stock1: number;
+  stock2: number;
+  total: number;
+  schedule: string;
+  quantity: number;
+};
+
+export const Stock: React.FC<any> = (props) => {
   const { items, products } = props;
   const [selectData, setSelectData] = useState([]); //検索時にインプット入力した配列リスト
   const [inputValue, setInputValue] = useState(""); //インプット入力値
   const [csvData, setCsvData] = useState(""); //CSVデータ
 
-  //品番の重複削除
+  //numberの重複削除
   const filterItems = items.filter(
     (item, index, self) =>
-      self.findIndex((e) => e["品番"] === item["品番"]) === index
+      self.findIndex((e) => e["number"] === item["number"]) === index
   );
 
   //CSVファイルに変換
   const onClickCsv = () => {
-    const csvData = items.filter((item) => {
-      return selectData.includes(item["品番"]);
-    });
+    const csvData = items.filter((item) => selectData.includes(item["number"]));
+
+    //特定のkeyを削除したい時
+    // delete items[0]["number"];
+    // csvData.filter((data) => {
+    //   delete data["number"];
+    // });
 
     const header = Object.keys(items[0]).join(",") + "\n";
+
     const body = csvData
       .map((d) => {
         return Object.keys(d)
-          .map((key) => {
-            return d[key];
-          })
+          .map((key) => d[key])
           .join(",");
       })
       .join("\n");
@@ -38,42 +55,47 @@ export const Stock = (props) => {
   };
 
   //INPUTの入力値を取得
-  const handleChangeText = (e) => {
-    setInputValue(e.target.value);
-  };
+  const handleChangeText = (e) => setInputValue(e.target.value);
 
   //検索絞り込み
   const onClickSearch = (e) => {
     e.preventDefault();
+    let filterItem = filterItems.filter((item) => item["number"] == inputValue); //Input入力値と同じオブジェクトを取り出す。
+    let newData = filterItem.map((item) => item["number"]); //オブジェクトから品番だけを取り出す
+    if (newData.length === 0) return; //データ空白であればリターンで返す。
 
-    let filterItem = filterItems.filter((item) => {
-      return item["品番"] == inputValue;
-    });
-
-    let newData = filterItem.map((v) => {
-      return v["品番"];
-    });
-
-    if (newData.length === 0) return;
-    if (!selectData.includes(newData[0])) {
+    !selectData.includes(newData[0]) &&
       setSelectData([...selectData, newData[0]]);
-    }
+
     setInputValue("");
+
+    // let filterItem = filterItems.filter((item) => {
+    //   return item["number"].includes(inputValue);
+    // });
+    // let newData = filterItem.map((v) => {
+    //   return v["number"];
+    // });
+
+    // if (newData.length === 0) return;
+    // newData.map((data) => {
+    //   if (!selectData.includes(data)) {
+    //     setSelectData((prev) => [...prev, data]);
+    //   }
+    // });
+    // setInputValue("");
   };
 
-  //選択している全ての品番を削除
+  //選択している全てのnumberを削除
   const onClickReset = () => {
     setInputValue("");
     setSelectData([]);
   };
 
-  //選択した品番の削除
+  //選択したnumberの削除
   const onClickDelete = (e, index) => {
     let deleteNumber = index;
     setSelectData(
-      [...selectData].filter((v, index) => {
-        return index !== Number(deleteNumber);
-      })
+      [...selectData].filter((v, index) => index !== Number(deleteNumber))
     );
   };
 

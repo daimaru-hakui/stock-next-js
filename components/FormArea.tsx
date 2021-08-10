@@ -2,7 +2,16 @@ import { Search2Icon } from "@chakra-ui/icons";
 import { Button, Icon, Input, InputGroup } from "@chakra-ui/react";
 import React from "react";
 
-const FormArea = (props) => {
+type Props = {
+  inputValue: string;
+  filterItems: [];
+  selectData: any;
+  handleChangeText: any;
+  onClickSearch: any;
+  onClickReset: any;
+};
+
+const FormArea: React.FC<Props> = (props) => {
   const {
     inputValue,
     filterItems,
@@ -39,8 +48,8 @@ const FormArea = (props) => {
         />
         <datalist id="search">
           {filterItems.map((item, index) => (
-            <option key={index} value={item["品番"]}>
-              {item["商品名"]}
+            <option key={index} value={item["number"]}>
+              {item["name"]}
             </option>
           ))}
         </datalist>

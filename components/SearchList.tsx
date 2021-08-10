@@ -27,9 +27,7 @@ const SearchList = (props) => {
   const { items, products, selectData, filterItems, onClickDelete } = props;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [showItem, setShowItem] = useState("");
-  const onClickModal = (data) => {
-    setShowItem(data);
-  };
+  const onClickModal = (data) => setShowItem(data);
 
   return (
     <>
@@ -65,15 +63,15 @@ const SearchList = (props) => {
                     <Box mr={2}>{data}</Box>
                     <Box mr={2}>
                       {filterItems.map(
-                        (item) => item["品番"] == data && item["商品名"]
+                        (item) => item["number"] == data && item["name"]
                       )}
                     </Box>
                     <Box>
                       {filterItems.map(
                         (item) =>
-                          item["品番"] == data &&
-                          item["上代"] &&
-                          "￥" + item["上代"]
+                          item["number"] == data &&
+                          item["price"] &&
+                          "￥" + item["price"]
                       )}
                     </Box>
                   </Flex>
@@ -118,15 +116,15 @@ const SearchList = (props) => {
               </Thead>
               <Tbody>
                 {items.map((item, index) => {
-                  if (item["品番"] == data) {
+                  if (item["number"] == data) {
                     return (
                       <Tr key={index}>
-                        <Td textAlign="center">{item["サイズ"]}</Td>
-                        <Td textAlign="center">{item["在庫数"]}</Td>
-                        <Td textAlign="center">{item["外部在庫"]}</Td>
-                        <Td textAlign="center">{item["TOTAL"]}</Td>
-                        <Td textAlign="center">{item["仕掛"]}</Td>
-                        <Td textAlign="center">{item["数量"]}</Td>
+                        <Td textAlign="center">{item["size"]}</Td>
+                        <Td textAlign="center">{item["stock1"]}</Td>
+                        <Td textAlign="center">{item["stock2"]}</Td>
+                        <Td textAlign="center">{item["total"]}</Td>
+                        <Td textAlign="center">{item["schedule"]}</Td>
+                        <Td textAlign="center">{item["quantity"]}</Td>
                       </Tr>
                     );
                   }

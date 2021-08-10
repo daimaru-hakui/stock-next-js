@@ -50,6 +50,21 @@ export async function getStaticProps() {
     }
     items.push(csvObject);
   }
+  items = items.map((item, index) => {
+    return {
+      id: index,
+      code: item["商品コード"],
+      number: item["品番"],
+      name: item["商品名"],
+      price: item["上代"],
+      size: item["サイズ"],
+      stock1: item["在庫数"],
+      stock2: item["外部在庫"],
+      total: item["TOTAL"],
+      schedule: item["仕掛"],
+      quantity: item["数量"],
+    };
+  });
   const products = productsRes.data.contents;
 
   return {
