@@ -37,11 +37,13 @@ export const Stock: React.FC<any> = (props) => {
 
     //特定のkeyを削除したい時
     // delete items[0]["number"];
-    // csvData.filter((data) => {
-    //   delete data["number"];
-    // });
+    csvData.filter((data) => {
+      delete data["id"];
+    });
 
-    const header = Object.keys(items[0]).join(",") + "\n";
+    // const header = Object.keys(items[0]).join(",") + "\n";
+    const header =
+      "商品コード,品番,商品名,上代,サイズ,在庫数,外部在庫,TOTAL,仕掛,数量\n";
 
     const body = csvData
       .map((d) => {

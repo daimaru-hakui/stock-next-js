@@ -8,7 +8,7 @@ type Props = {
   selectData: any;
   handleChangeText: any;
   onClickSearch: any;
-  onClickReset: any;
+  onClickReset: VoidFunction;
 };
 
 const FormArea: React.FC<Props> = (props) => {
