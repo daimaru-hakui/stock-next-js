@@ -1,3 +1,6 @@
+import { auth } from "../firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from 'next/router';
 import {
   Box,
   Button,
@@ -13,6 +16,12 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 export const Header: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleToggle = () => (isOpen ? onClose() : onOpen());
+  const router = useRouter();
+  const logout = (event) => {
+    event.preventDefault();
+    auth.signOut();
+    router.push('login');
+  }
   return (
     <Flex
       as="nav"
@@ -46,6 +55,8 @@ export const Header: React.FC = () => {
         display={{ base: isOpen ? "block" : "none", md: "block" }}
         mt={{ base: 4, md: 0 }}
       ></Box>
+      <Button color="blue" onClick={logout}>ログアウト</Button>
     </Flex>
+    
   );
 };
