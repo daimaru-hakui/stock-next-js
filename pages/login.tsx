@@ -54,16 +54,18 @@ const Login: React.FC = (props) => {
           <Heading mb={6}>Log in</Heading>
           <Input
             placeholder="ログインID"
-            variant="filled"
+            variant="Outline"
             mb={3}
+            background={"white"}
             type="email"
             value={email}
             onChange={(event)=> setEmail(event.target.value)}
           />
           <Input
             placeholder="パスワード"
-            variant="filled"
+            variant="Outline"
             mb={6}
+            background={"white"}
             type="password"
             value={password}
             onChange={(event)=> setPassword(event.target.value)}
