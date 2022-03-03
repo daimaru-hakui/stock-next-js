@@ -1,3 +1,7 @@
+import { useEffect } from "react";
+import { auth } from "../firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from 'next/router';
 import axios from "axios";
 import { Stock } from "../components/Stock";
 import { Header } from "../components/Header";
@@ -7,6 +11,13 @@ import MainTitle from "../components/MainTitle";
 
 const Home = (props) => {
   const { items, products } = props;
+  const router = useRouter();
+  const [user] = useAuthState(auth);
+  useEffect(()=>{
+    if(user===null) {
+      router.push('/login');
+    }
+  },[router, user]);
   return (
     <>
       <StockContextProvider>

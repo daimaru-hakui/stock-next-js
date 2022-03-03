@@ -4,7 +4,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from 'next/router';
 import {
   onAuthStateChanged,
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
@@ -25,26 +24,27 @@ type Props = {
 const Login: React.FC = (props) => {
   const [user] = useAuthState(auth);
   const [email, setEmail] = useState('');
-  const [ password, setPassword ] = useState('')
+  const [ password, setPassword ] = useState('');
   const router = useRouter();
   const { toggleColorMode } = useColorMode();
   const formBackground = useColorModeValue("gray.100", "gray.500");
+  useEffect(()=>{
+    if(user) {
+      router.push('/');
+    }
+  },[router, user])
   const signup = (event) => {
     event.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user)
+        // const user = userCredential.user;
+        // console.log(user)
         router.push('/');
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
       });
-  }
-  const logout = (event) => {
-    event.preventDefault();
-    auth.signOut();
   }
 
   return (
@@ -53,7 +53,7 @@ const Login: React.FC = (props) => {
         <Flex direction="column" background={formBackground} p={12} rounded={6}>
           <Heading mb={6}>Log in</Heading>
           <Input
-            placeholder="example@gmail.com"
+            placeholder="ログインID"
             variant="filled"
             mb={3}
             type="email"
@@ -61,7 +61,7 @@ const Login: React.FC = (props) => {
             onChange={(event)=> setEmail(event.target.value)}
           />
           <Input
-            placeholder="************"
+            placeholder="パスワード"
             variant="filled"
             mb={6}
             type="password"
@@ -69,7 +69,7 @@ const Login: React.FC = (props) => {
             onChange={(event)=> setPassword(event.target.value)}
           />
           <Button onClick={signup} colorScheme="teal" mb={3}>login</Button>
-          <Button onClick={toggleColorMode}>mode</Button>
+          {/* <Button onClick={toggleColorMode}>mode</Button> */}
         </Flex>
       </Flex>
     </div>

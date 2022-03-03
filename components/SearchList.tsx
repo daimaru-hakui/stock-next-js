@@ -110,7 +110,7 @@ const SearchList = (props) => {
                   <Th textAlign="center">在庫数</Th>
                   <Th textAlign="center">外部在庫</Th>
                   <Th textAlign="center">TOTAL</Th>
-                  <Th textAlign="center">仕掛納期</Th>
+                  {/* <Th textAlign="center">仕掛納期</Th> */}
                   <Th textAlign="center">仕掛数量</Th>
                 </Tr>
               </Thead>
@@ -123,7 +123,7 @@ const SearchList = (props) => {
                         <Td textAlign="center">{item["stock1"]}</Td>
                         <Td textAlign="center">{item["stock2"]}</Td>
                         <Td textAlign="center">{item["total"]}</Td>
-                        <Td textAlign="center">{item["schedule"]}</Td>
+                        {/* <Td textAlign="center">{item["schedule"]}</Td> */}
                         <Td textAlign="center">{item["quantity"]}</Td>
                       </Tr>
                     );

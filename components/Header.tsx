@@ -1,5 +1,4 @@
 import { auth } from "../firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from 'next/router';
 import {
   Box,
@@ -9,6 +8,7 @@ import {
   Link,
   Stack,
   Text,
+  Spacer,
   useDisclosure,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
@@ -37,25 +37,28 @@ export const Header: React.FC = () => {
           DAIMARU HAKUI
         </Heading>
       </Flex>
+
       <Box display={{ base: "block", md: "none" }} onClick={handleToggle}>
         <HamburgerIcon />
       </Box>
-
+      
       <Stack
         direction={{ base: "column", md: "row" }}
         display={{ base: isOpen ? "block" : "none", md: "flex" }}
         width={{ base: "full", md: "auto" }}
-        alignItems="center"
-        flexGrow={1}
+        alignItems="right"
+        // flexGrow={1}
         mt={{ base: 4, md: 0 }}
       >
-        <Link href="https://www.daimaru-hakui.co.jp/">WEBサイト</Link>
+        
+        <Link textColor={"white"} onClick={logout} >ログアウト</Link>
       </Stack>
+{/* 
       <Box
         display={{ base: isOpen ? "block" : "none", md: "block" }}
         mt={{ base: 4, md: 0 }}
-      ></Box>
-      <Button color="blue" onClick={logout}>ログアウト</Button>
+      ></Box> */}
+   
     </Flex>
     
   );

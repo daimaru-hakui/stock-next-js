@@ -15,7 +15,7 @@ type Props = {
   stock1: number;
   stock2: number;
   total: number;
-  schedule: string;
+  // schedule: string;
   quantity: number;
 };
 
