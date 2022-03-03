@@ -42,6 +42,7 @@ const Login: React.FC = (props) => {
         router.push('/');
       })
       .catch((error) => {
+        alert('失敗しました');
         const errorCode = error.code;
         const errorMessage = error.message;
       });
