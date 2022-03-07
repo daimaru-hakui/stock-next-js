@@ -72,7 +72,7 @@ export async function getStaticProps() {
       stock1: item["在庫数"],
       stock2: item["外部在庫"],
       total: item["TOTAL"],
-      schedule: item["仕掛"],
+      // schedule: item["仕掛"],
       quantity: item["数量"],
     };
   });

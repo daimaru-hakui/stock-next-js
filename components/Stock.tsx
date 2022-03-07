@@ -43,7 +43,7 @@ export const Stock: React.FC<any> = (props) => {
 
     // const header = Object.keys(items[0]).join(",") + "\n";
     const header =
-      "商品コード,品番,商品名,上代,サイズ,在庫数,外部在庫,TOTAL,仕掛,数量\n";
+      "商品コード,品番,商品名,上代,サイズ,在庫数,外部在庫,TOTAL,仕掛数量\n";
 
     const body = csvData
       .map((d) => {
