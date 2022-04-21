@@ -1,38 +1,38 @@
-import { useEffect } from "react";
-import { auth } from "../firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useEffect } from 'react';
+import { auth } from '../firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/router';
-import axios from "axios";
-import { Stock } from "../components/Stock";
-import { Header } from "../components/Header";
-import StockContextProvider from "../contexts/StockContext";
-import Head from "../components/HeadMeta";
-import MainTitle from "../components/MainTitle";
+import axios from 'axios';
+import { Stock } from '../components/Stock';
+import { Header } from '../components/Header';
+import StockContextProvider from '../contexts/StockContext';
+import Head from '../components/HeadMeta';
+import MainTitle from '../components/MainTitle';
 
 const Home = (props) => {
-  const { items, products } = props;
+  const { items } = props;
   const router = useRouter();
   const [user] = useAuthState(auth);
-  useEffect(()=>{
-    if(user===null) {
+  useEffect(() => {
+    if (user === null) {
       router.push('/login');
     }
-  },[router, user]);
+  }, [router, user]);
   return (
     <>
       <StockContextProvider>
         <Head
-          title={"大丸白衣 在庫表"}
+          title={'大丸白衣 在庫表'}
           description={
-            "マイユニフォームクラブとセレナーデの商品在庫を検索することができるWEBアプリです。"
+            'マイユニフォームクラブとセレナーデの商品在庫を検索することができるWEBアプリです。'
           }
         />
         <Header />
         <MainTitle
-          h2Title={"在庫検索"}
-          h3Title={"品番を入力して在庫検索ができます。"}
+          h2Title={'在庫検索'}
+          h3Title={'品番を入力して在庫検索ができます。'}
         />
-        <Stock items={items} products={products} />
+        <Stock items={items} />
       </StockContextProvider>
     </>
   );
@@ -40,22 +40,17 @@ const Home = (props) => {
 export default Home;
 
 export async function getStaticProps() {
-  const [itemsRes, productsRes] = await Promise.all([
+  const [itemsRes] = await Promise.all([
     axios.get(
-      "https://docs.google.com/spreadsheets/d/e/2PACX-1vTPID0Oyeo8FwNN6lDPETgrhd8OsmrRJ6RZy5EO80G4uGgkj7ZRhCZ9OXsUNDFF0c5YWfwSrBaEh9_P/pub?gid=1399239958&single=true&output=csv"
+      'https://docs.google.com/spreadsheets/d/e/2PACX-1vTPID0Oyeo8FwNN6lDPETgrhd8OsmrRJ6RZy5EO80G4uGgkj7ZRhCZ9OXsUNDFF0c5YWfwSrBaEh9_P/pub?gid=1399239958&single=true&output=csv'
     ),
-    axios.get("https://catalog-information.microcms.io/api/v1/products", {
-      headers: {
-        "X-API-KEY": "6ada6ea2-91a7-4914-aff7-0803ef6db4bb",
-      },
-    }),
   ]);
-  const splitItems = await itemsRes.data.split("\n");
-  const itemKeys = await splitItems[0].trim().split(",");
+  const splitItems = await itemsRes.data.split('\n');
+  const itemKeys = await splitItems[0].trim().split(',');
   let items = [];
   for (let i = 1; i < splitItems.length; i++) {
     let csvObject = new Object();
-    let itemValues = splitItems[i].split(",");
+    let itemValues = splitItems[i].split(',');
     for (let j = 0; j < itemKeys.length; j++) {
       csvObject[itemKeys[j]] = itemValues[j];
     }
@@ -64,24 +59,22 @@ export async function getStaticProps() {
   items = items.map((item, index) => {
     return {
       id: index,
-      code: item["商品コード"],
-      number: item["品番"],
-      name: item["商品名"],
-      price: item["上代"],
-      size: item["サイズ"],
-      stock1: item["在庫数"],
-      stock2: item["外部在庫"],
-      total: item["TOTAL"],
+      code: item['商品コード'],
+      number: item['品番'],
+      name: item['商品名'],
+      price: item['上代'],
+      size: item['サイズ'],
+      stock1: item['在庫数'],
+      stock2: item['外部在庫'],
+      total: item['TOTAL'],
       // schedule: item["仕掛"],
-      quantity: item["数量"],
+      quantity: item['数量'],
     };
   });
-  const products = productsRes.data.contents;
 
   return {
     props: {
       items,
-      products,
     },
   };
 }

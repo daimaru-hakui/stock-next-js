@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { DownloadIcon } from "@chakra-ui/icons";
-import { Box, Button, Flex, Icon, WrapItem } from "@chakra-ui/react";
-import { CSVLink } from "react-csv";
-import FormArea from "./FormArea";
-import SearchList from "./SearchList";
+import { useState } from 'react';
+import { Button, Flex, Icon } from '@chakra-ui/react';
+
+import { CSVLink } from 'react-csv';
+import FormArea from './FormArea';
+import SearchList from './SearchList';
+import { DownloadIcon } from '@chakra-ui/icons';
 
 type Props = {
   id: string;
@@ -22,36 +23,36 @@ type Props = {
 export const Stock: React.FC<any> = (props) => {
   const { items, products } = props;
   const [selectData, setSelectData] = useState([]); //検索時にインプット入力した配列リスト
-  const [inputValue, setInputValue] = useState(""); //インプット入力値
-  const [csvData, setCsvData] = useState(""); //CSVデータ
+  const [inputValue, setInputValue] = useState(''); //インプット入力値
+  const [csvData, setCsvData] = useState(''); //CSVデータ
 
   //numberの重複削除
   const filterItems = items.filter(
     (item, index, self) =>
-      self.findIndex((e) => e["number"] === item["number"]) === index
+      self.findIndex((e) => e['number'] === item['number']) === index
   );
 
   //CSVファイルに変換
   const onClickCsv = () => {
-    const csvData = items.filter((item) => selectData.includes(item["number"]));
+    const csvData = items.filter((item) => selectData.includes(item['number']));
 
     //特定のkeyを削除したい時
     // delete items[0]["number"];
     csvData.filter((data) => {
-      delete data["id"];
+      delete data['id'];
     });
 
     // const header = Object.keys(items[0]).join(",") + "\n";
     const header =
-      "商品コード,品番,商品名,上代,サイズ,在庫数,外部在庫,TOTAL,仕掛数量\n";
+      '商品コード,品番,商品名,上代,サイズ,在庫数,外部在庫,TOTAL,仕掛数量\n';
 
     const body = csvData
       .map((d) => {
         return Object.keys(d)
           .map((key) => d[key])
-          .join(",");
+          .join(',');
       })
-      .join("\n");
+      .join('\n');
     const csvFile = header + body;
     setCsvData(csvFile);
   };
@@ -62,14 +63,14 @@ export const Stock: React.FC<any> = (props) => {
   //検索絞り込み
   const onClickSearch = (e) => {
     e.preventDefault();
-    let filterItem = filterItems.filter((item) => item["number"] == inputValue); //Input入力値と同じオブジェクトを取り出す。
-    let newData = filterItem.map((item) => item["number"]); //オブジェクトから品番だけを取り出す
+    let filterItem = filterItems.filter((item) => item['number'] == inputValue); //Input入力値と同じオブジェクトを取り出す。
+    let newData = filterItem.map((item) => item['number']); //オブジェクトから品番だけを取り出す
     if (newData.length === 0) return; //データ空白であればリターンで返す。
 
     !selectData.includes(newData[0]) &&
       setSelectData([...selectData, newData[0]]);
 
-    setInputValue("");
+    setInputValue('');
 
     // let filterItem = filterItems.filter((item) => {
     //   return item["number"].includes(inputValue);
@@ -89,7 +90,7 @@ export const Stock: React.FC<any> = (props) => {
 
   //選択している全てのnumberを削除
   const onClickReset = () => {
-    setInputValue("");
+    setInputValue('');
     setSelectData([]);
   };
 
@@ -111,11 +112,11 @@ export const Stock: React.FC<any> = (props) => {
         onClickSearch={onClickSearch}
         onClickReset={onClickReset}
       />
-      <Flex justifyContent="center" mb={6}>
+      <Flex justifyContent='center' mb={6}>
         {selectData.length > 0 && (
           <CSVLink
             data={csvData}
-            filename={new Date().toLocaleString() + "_zaiko.csv"}
+            filename={new Date().toLocaleString() + '_zaiko.csv'}
           >
             <Button onClick={onClickCsv}>
               CSVダウンロード
