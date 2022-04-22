@@ -20,20 +20,22 @@ const Home = (props) => {
   }, [router, user]);
   return (
     <>
-      <StockContextProvider>
-        <Head
-          title={'大丸白衣 在庫表'}
-          description={
-            'マイユニフォームクラブとセレナーデの商品在庫を検索することができるWEBアプリです。'
-          }
-        />
-        <Header />
-        <MainTitle
-          h2Title={'在庫検索'}
-          h3Title={'品番を入力して在庫検索ができます。'}
-        />
-        <Stock items={items} />
-      </StockContextProvider>
+      {user && (
+        <StockContextProvider>
+          <Head
+            title={'大丸白衣 在庫表'}
+            description={
+              'マイユニフォームクラブとセレナーデの商品在庫を検索することができるWEBアプリです。'
+            }
+          />
+          <Header />
+          <MainTitle
+            h2Title={'在庫検索'}
+            h3Title={'品番を入力して在庫検索ができます。'}
+          />
+          <Stock items={items} />
+        </StockContextProvider>
+      )}
     </>
   );
 };
